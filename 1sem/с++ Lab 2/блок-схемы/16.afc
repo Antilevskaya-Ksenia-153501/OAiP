@@ -1,0 +1,21 @@
+<!DOCTYPE AFC>
+<algorithm version="1.2">
+  <branch>
+    <io vars="a,b"/>
+    <process text="nok = a * b"/>
+    <pre cond="a != b">
+      <branch>
+        <if cond="a > b">
+          <branch>
+            <process text="a -= b"/>
+          </branch>
+          <branch>
+            <process text="b -= a"/>
+          </branch>
+        </if>
+      </branch>
+    </pre>
+    <ou vars="а"/>
+    <ou vars="nok / а"/>
+  </branch>
+</algorithm>

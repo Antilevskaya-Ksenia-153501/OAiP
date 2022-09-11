@@ -1,0 +1,14 @@
+<!DOCTYPE AFC>
+<algorithm version="1.2">
+  <branch>
+    <io vars="x,y,z"/>
+    <if cond="x &lt; z + y &amp;&amp; z &lt; x + y &amp;&amp; y &lt; x + z">
+      <branch>
+        <io vars="The triangle exists"/>
+      </branch>
+      <branch>
+        <ou vars="The triangle does not exist"/>
+      </branch>
+    </if>
+  </branch>
+</algorithm>

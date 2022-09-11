@@ -1,0 +1,29 @@
+<!DOCTYPE AFC>
+<algorithm version="1.2">
+  <branch>
+    <io vars="x1,y1,x2,y2,r,R"/>
+    <process text=" a = sqrt((pow((x2 - x1), 2)) + pow((y2 - y1), 2))"/>
+    <if cond="a + r &lt;= R">
+      <branch>
+        <ou vars="Первая ,окружность, попадает ,во второю окружность"/>
+      </branch>
+      <branch>
+        <if cond="a + R &lt;= r">
+          <branch>
+            <ou vars="Вторая окружность попадает в первую окружность"/>
+          </branch>
+          <branch>
+            <if cond="a &lt;= r + R">
+              <branch>
+                <ou vars="Окружности пересекаются"/>
+              </branch>
+              <branch>
+                <ou vars="Ни одно условие не выполнено"/>
+              </branch>
+            </if>
+          </branch>
+        </if>
+      </branch>
+    </if>
+  </branch>
+</algorithm>

@@ -1,0 +1,33 @@
+<!DOCTYPE AFC>
+<algorithm version="1.2">
+  <branch>
+    <io vars="x,y"/>
+    <if cond="x >= y">
+      <branch>
+        <if cond="x % y == 0">
+          <branch>
+            <ou vars="x divisible,on y without ,remainder"/>
+          </branch>
+          <branch>
+            <ou vars="x divisible ,on y with,remainder"/>
+          </branch>
+        </if>
+      </branch>
+      <branch>
+        <if cond="x &lt; y">
+          <branch>
+            <if cond="y % x == 0">
+              <branch>
+                <ou vars="y divisible,on x without ,remainder"/>
+              </branch>
+              <branch>
+                <ou vars="y divisible ,on x with ,remainder"/>
+              </branch>
+            </if>
+          </branch>
+          <branch/>
+        </if>
+      </branch>
+    </if>
+  </branch>
+</algorithm>

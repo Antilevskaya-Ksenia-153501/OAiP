@@ -1,0 +1,15 @@
+<!DOCTYPE AFC>
+<algorithm version="1.2">
+  <branch>
+    <io vars="p,n,x,K,D"/>
+    <if cond="D * K == 0">
+      <branch>
+        <ou vars="MISTAKE!!! ,K=!0 and D=!0"/>
+      </branch>
+      <branch>
+        <process text="Q = (pow(cos(x), 2) / (K * D)) + cos(x) * pow((p - n), 3)"/>
+        <ou vars="Q"/>
+      </branch>
+    </if>
+  </branch>
+</algorithm>

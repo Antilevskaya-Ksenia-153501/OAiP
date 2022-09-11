@@ -1,0 +1,21 @@
+<!DOCTYPE AFC>
+<algorithm version="1.2">
+  <branch>
+    <io vars="X,Y"/>
+    <if cond="X&lt;Y">
+      <branch>
+        <ou vars="Y"/>
+      </branch>
+      <branch>
+        <if cond="X>Y">
+          <branch>
+            <ou vars="X"/>
+          </branch>
+          <branch>
+            <ou vars="X == Y"/>
+          </branch>
+        </if>
+      </branch>
+    </if>
+  </branch>
+</algorithm>

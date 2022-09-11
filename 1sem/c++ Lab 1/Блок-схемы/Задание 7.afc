@@ -1,0 +1,12 @@
+<!DOCTYPE AFC>
+<algorithm version="1.2">
+  <branch>
+    <io vars="a,b"/>
+    <process text=" b = a + b"/>
+    <ou vars="b"/>
+    <process text=" a = b - a"/>
+    <ou vars="a"/>
+    <process text=" b = b - a"/>
+    <ou vars="b"/>
+  </branch>
+</algorithm>

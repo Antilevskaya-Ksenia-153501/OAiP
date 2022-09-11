@@ -1,0 +1,61 @@
+<!DOCTYPE AFC>
+<algorithm version="1.2">
+  <branch>
+    <io vars="x1,y1,x2,y2,x3,y3"/>
+    <process text="line1 = sqrt(pow(x1 - x2, 2) + pow(y1 - y2, 2))"/>
+    <ou vars="line1"/>
+    <process text="line2 = sqrt(pow(x3 - x2, 2) + pow(y3 - y2, 2))"/>
+    <ou vars="line2"/>
+    <process text="line3 = sqrt(pow(x1 - x3, 2) + pow(y1 - y3, 2))"/>
+    <ou vars="line3"/>
+    <process text="p = (line1 + line2 + line3) / 2"/>
+    <process text="S1 = sqrt((p * (p - line1) * (p - line2) * (p - line3)))"/>
+    <process text="h1 = (2 * S1) / line1"/>
+    <ou vars="h1"/>
+    <process text="h2 = (2 * S1) / line2"/>
+    <ou vars="h2"/>
+    <process text="h3 = (2 * S1) / line3"/>
+    <ou vars="h3"/>
+    <process text="m1 = 0.5 * sqrt(2 * pow(line2, 2) + 2 * pow(line3, 2) - pow(line1, 2))"/>
+    <ou vars="m1"/>
+    <process text="m2 = 0.5 * sqrt(2 * pow(line1, 2) + 2 * pow(line3, 2) - pow(line2, 2))"/>
+    <ou vars="m2"/>
+    <process text="m3 = 0.5 * sqrt(2 * pow(line2, 2) + 2 * pow(line1, 2) - pow(line3, 2))"/>
+    <ou vars="m3"/>
+    <process text="b1 = (2 * sqrt(line2 * line3 * p * (p - line1))) / (line2 + line3)"/>
+    <ou vars="b1"/>
+    <process text="b2 = (2 * sqrt(line1 * line3 * p * (p - line2))) / (line1 + line3)"/>
+    <ou vars="b2"/>
+    <process text="b3 = (2 * sqrt(line2 * line1 * p * (p - line3))) / (line2 + line1)"/>
+    <ou vars="b3"/>
+    <process text="S2 = 0.5 * h1 * line1"/>
+    <process text="r = sqrt(((p - line1) * (p - line2) * (p - line3)) / p)"/>
+    <ou vars="r"/>
+    <process text="R = (line1 * line2 * line3) / (4 * S1)"/>
+    <ou vars="R"/>
+    <process text="S_r = 3.14 * pow(r, 2)"/>
+    <ou vars="S_r"/>
+    <process text="S_R = 3.14 * pow(R, 2)"/>
+    <ou vars="S_R"/>
+    <process text="C1 = 2 * 3.14 * r"/>
+    <ou vars="C1"/>
+    <process text="C2 = 2 * 3.14 * R"/>
+    <ou vars="C2"/>
+    <process text="P = line1 + line2 + line3;"/>
+    <ou vars="P"/>
+    <ou vars="S1"/>
+    <process text="angle1rad = acos((pow(line1, 2) - pow(line2, 2) - pow(line3, 2)) / (-2 * line2 * line3))"/>
+    <ou vars="angle1rad"/>
+    <process text="angle2rad = acos((pow(line2, 2) - pow(line1, 2) - pow(line3, 2)) / (-2 * line1 * line3))"/>
+    <ou vars="angle2rad"/>
+    <process text="angle3rad = acos((pow(line3, 2) - pow(line2, 2) - pow(line1, 2)) / (-2 * line2 * line1))"/>
+    <ou vars="angle3rad"/>
+    <process text="angle1 = angle1rad * 180 / 3.14"/>
+    <ou vars="angle1"/>
+    <process text="angle2 = angle2rad * 180 / 3.14"/>
+    <ou vars="angle2"/>
+    <process text="angle3 = angle3rad * 180 / 3.14"/>
+    <ou vars="angle3"/>
+    <process text="S3 = 0.5 * line1 * line2 * sin(angle3rad)"/>
+  </branch>
+</algorithm>

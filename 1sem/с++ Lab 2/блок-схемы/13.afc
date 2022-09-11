@@ -1,0 +1,17 @@
+<!DOCTYPE AFC>
+<algorithm version="1.2">
+  <branch>
+    <io vars="R,P,Q"/>
+    <process text="d1 = 2 * sin(Q / 2) * P"/>
+    <process text="d2 = 2 * cos(Q / 2) * P;"/>
+    <process text="a = (d1 * d2) / (4 * P)"/>
+    <if cond="R &lt;= a">
+      <branch>
+        <ou vars="The sphere will pass through the rhomboos hole"/>
+      </branch>
+      <branch>
+        <ou vars="The sphere will not pass through the rhomboos hole"/>
+      </branch>
+    </if>
+  </branch>
+</algorithm>

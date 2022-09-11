@@ -1,0 +1,23 @@
+<!DOCTYPE AFC>
+<algorithm version="1.2">
+  <branch>
+    <io vars="a ,b,c,d"/>
+    <if cond="c >= d &amp;&amp; a &lt; d">
+      <branch>
+        <process text="Z = a + b/c"/>
+        <ou vars="Z"/>
+      </branch>
+      <branch>
+        <if cond="c &lt; d &amp;&amp; a >= d">
+          <branch>
+            <process text="Z = a - b/c "/>
+            <ou vars="Z"/>
+          </branch>
+          <branch>
+            <ou vars="Z = 0"/>
+          </branch>
+        </if>
+      </branch>
+    </if>
+  </branch>
+</algorithm>

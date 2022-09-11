@@ -1,0 +1,14 @@
+<!DOCTYPE AFC>
+<algorithm version="1.2">
+  <branch>
+    <io vars="x,y,a,b,c"/>
+    <if cond="(a &lt;= x &amp;&amp; b &lt;= y) || (a &lt;= y &amp;&amp; b &lt;= x) || (b &lt;= x &amp;&amp; c &lt;= y) || (b &lt;= y &amp;&amp; c &lt;= x) || (a &lt;= x &amp;&amp; c &lt;= y) || (a &lt;= y &amp;&amp; c &lt;= x)">
+      <branch>
+        <ou vars="The brick will go through opening"/>
+      </branch>
+      <branch>
+        <ou vars="The brick will not go through opening"/>
+      </branch>
+    </if>
+  </branch>
+</algorithm>

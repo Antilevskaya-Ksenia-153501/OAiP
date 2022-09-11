@@ -1,0 +1,10 @@
+<!DOCTYPE AFC>
+<algorithm version="1.2">
+  <branch>
+    <io vars="a1,a100"/>
+    <process text=" d = (a100 - a1) / 99"/>
+    <ou vars="d"/>
+    <process text="S = ((2 * a1 + d * 12) / 2 )* 13;"/>
+    <ou vars="S"/>
+  </branch>
+</algorithm>

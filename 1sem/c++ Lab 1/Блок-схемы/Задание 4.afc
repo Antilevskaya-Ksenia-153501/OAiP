@@ -1,0 +1,8 @@
+<!DOCTYPE AFC>
+<algorithm version="1.2">
+  <branch>
+    <io vars="h"/>
+    <process text="t = sqrt((2 * h) / 9.81)"/>
+    <ou vars="t"/>
+  </branch>
+</algorithm>

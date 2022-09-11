@@ -1,0 +1,8 @@
+<!DOCTYPE AFC>
+<algorithm version="1.2">
+  <branch>
+    <io vars="t,a,v0"/>
+    <process text="S = v0 * t + a * pow(t, 2)/ 2"/>
+    <ou vars="S"/>
+  </branch>
+</algorithm>
