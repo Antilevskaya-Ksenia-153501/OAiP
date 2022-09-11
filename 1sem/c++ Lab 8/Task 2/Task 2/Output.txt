@@ -1,0 +1,2 @@
+The list of enrollees, the average score of which above the university average:
+Surname: 55555

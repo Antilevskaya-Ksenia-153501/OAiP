@@ -1,0 +1,12 @@
+Surname: 55555Name: kkk
+Patronymic: mkk
+Math: 8
+Physics: 9
+Language: 9
+________________________________________________
+Surname: 4567890Name: dfghjkl;
+Patronymic: 6789
+Math: 8
+Physics: 8
+Language: 8
+________________________________________________
