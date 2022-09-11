@@ -1,0 +1,458 @@
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
+
+MainWindow::MainWindow(QWidget *parent)
+    : QMainWindow(parent)
+    , ui(new Ui::MainWindow)
+{
+    ui->setupUi(this);
+    this->resize(1200, 600);
+    this->setFixedSize(1200, 600);
+}
+
+MainWindow::~MainWindow()
+{
+    delete ui;
+}
+
+MyString MainWindow::QStringToMyString(QString input)
+{
+    MyString temp;
+    temp = temp + input.toStdString().c_str();
+    return temp;
+}
+
+QString MainWindow::MyStringToQString(MyString input)
+{
+    QString temp;
+    for(size_t i = 0; i < input.Size(); i++)
+    {
+        temp += input[i];
+    }
+    return temp;
+}
+
+std::string MainWindow::MyStringToStdString(MyString input)
+{
+    std::string temp;
+    for(size_t i = 0; i < input.Size(); i++)
+    {
+        temp += input[i];
+    }
+    return temp;
+}
+
+MyString MainWindow::StdStringToMyString(std::string input)
+{
+    MyString temp = input.c_str();
+    return temp;
+}
+
+void MainWindow::on_find_types_of_variables_clicked()
+{
+    MyVector<MyString> variablesInfo, typeName;
+    MyVector<int> count;
+    MyVector<char> g;
+    std::regex reg("((size_t|int|double|float|char)\\s*[\\*]*)\\s*(((\\,\\s)?([\\w]+)\\s*((=\\s-*[\\w+]*|\\([\\w]+\\))?(\\{[\\w ,]+\\})?)){0,});");
+    std::smatch res;
+    std::string str = ui->plainTextEdit->toPlainText().toStdString();
+    while(std::regex_search(str, res, reg))
+    {
+        variablesInfo.Push_Back(StdStringToMyString(res.str()));
+        int exist = -1;
+        for(size_t i = 0; i < typeName.Size(); i++)
+        {
+            if(typeName[i] == StdStringToMyString(res[1].str()))
+            {
+                exist = i;
+                break;
+            }
+        }
+        if(exist == -1)
+        {
+            count.Push_Back(MyStringToQString(StdStringToMyString(res[3].str())).count(',') + 1);
+            typeName.Push_Back(StdStringToMyString(res[1].str()));
+        }
+        else
+        {
+            count[exist] += 1;
+        }
+        str = res.suffix();
+    }
+    if (typeName.Size() == 0)
+    {
+        ui->plainTextEdit_Output->clear();
+        ui->plainTextEdit_Output->appendPlainText("There is no variables");
+    }
+    else
+    {
+        ui->plainTextEdit_Output->clear();
+        for(size_t i = 0; i < variablesInfo.Size(); i++)
+        {
+            ui->plainTextEdit_Output->appendPlainText(MyStringToQString(variablesInfo[i]));
+        }
+        ui->plainTextEdit_Output->appendPlainText("Amount:");
+        for(size_t i = 0; i < typeName.Size(); i++)
+        {
+            ui->plainTextEdit_Output->appendPlainText(MyStringToQString(typeName[i]) + " " + QString::number(count[i]));
+        }
+    }
+}
+
+void MainWindow::on_find_class_structure_array_clicked()
+{
+    ui->plainTextEdit_Output->clear();
+    MyVector<MyString> className, classType, arrayName;
+    MyVector<int> classCounter, arrayCount;
+    std::regex reg("(class|struct)\\s*(\\w+)\\s*\\{");
+    std::smatch res;
+    std::string str = ui->plainTextEdit->toPlainText().toStdString();
+    while(std::regex_search(str, res, reg))
+    {
+        int exist = -1;
+        for(size_t i = 0; i < className.Size(); i++)
+        {
+            if(className[i] == StdStringToMyString(res[1].str()))
+            {
+                exist = i;
+                break;
+            }
+        }
+        if(exist == -1)
+        {
+            className.Push_Back(StdStringToMyString(res[2].str()));
+            classType.Push_Back(StdStringToMyString(res[1].str()));
+            classCounter.Push_Back(0);
+            arrayCount.Push_Back(0);
+            arrayName.Push_Back(StdStringToMyString(res[2].str()));
+        }
+        str = res.suffix();
+    }
+    for(size_t i = 0; i < className.Size(); i++)
+    {
+        str = ui->plainTextEdit->toPlainText().toStdString();
+        reg = ("\\s+(" + MyStringToStdString(className[i]) + "\\s*[\\*]*)\\s*(((\\,\\s)?([\\w]+)\\s*((=\\s*[\\w+]*|\\([\\w]+\\))?(\\{[\\w ,]+\\})?(\\([\\w ,]+\\))?)){0,});");
+        while(std::regex_search(str, res, reg))
+        {
+            classCounter[i] += MyStringToQString(StdStringToMyString(res[2].str())).count(',') + 1;
+            str = res.suffix();
+        }
+    }
+    arrayName.Push_Back("int");
+    arrayCount.Push_Back(0);
+    arrayName.Push_Back("char");
+    arrayCount.Push_Back(0);
+    arrayName.Push_Back("double");
+    arrayCount.Push_Back(0);
+    arrayName.Push_Back("float");
+    arrayCount.Push_Back(0);
+    arrayName.Push_Back("size_t");
+    arrayCount.Push_Back(0);
+    for(size_t i = 0; i < arrayName.Size(); i++)
+    {
+        str = ui->plainTextEdit->toPlainText().toStdString();
+        reg = ("(" + MyStringToStdString(arrayName[i]) + "\\s*[\\*]*)\\s*(((\\,\\s)?([\\w]+)(\\[[\\w ,]+\\])\\s*((=\\s*[\\w+]*|\\([\\w]+\\))?(\\{[\\w ,]+\\})?)){0,});");
+        while(std::regex_search(str, res, reg))
+        {
+            arrayCount[i] += MyStringToQString(StdStringToMyString(res.str())).count('[');
+            str = res.suffix();
+        }
+    }
+    if (classCounter.Size() == 0)
+    {
+        ui->plainTextEdit_Output->appendPlainText("There is no initialized classes/structs");
+    }
+    for(size_t i = 0; i < className.Size(); i++)
+    {
+        if(classCounter[i])
+        {
+            ui->plainTextEdit_Output->appendPlainText(MyStringToQString(classType[i] + " " + className[i] + " ") + QString::number(classCounter[i]));
+        }
+    }
+    for(size_t i = 0; i < arrayName.Size(); i++)
+    {
+        if(className.Size() > i)
+        {
+            if(arrayCount[i])
+            {
+                ui->plainTextEdit_Output->appendPlainText(MyStringToQString(classType[i] + " " + arrayName[i] + "[]" + " ") + QString::number(arrayCount[i]));
+            }
+        }
+        else
+        {
+            if(arrayCount[i])
+            {
+                ui->plainTextEdit_Output->appendPlainText(MyStringToQString(arrayName[i] + "[]" + " ") + QString::number(arrayCount[i]));
+            }
+        }
+    }
+}
+
+void MainWindow::on_find_function_clicked()
+{
+    MyVector<MyString> functionName;
+    std::regex reg("((\\w+)\\s+[\\*]*(\\w*::)?\\s*((([\\w]+)\\((\\s*[\\w]*\\s*[\\*]*\\s*\\w+\\s*\\,?\\s*){0,}\\))))\\s*\\{");
+    std::smatch res;
+    std::string str = ui->plainTextEdit->toPlainText().toStdString();
+    while(std::regex_search(str, res, reg))
+    {
+        functionName.Push_Back(StdStringToMyString(res[1].str()));
+        str = res.suffix();
+    }
+    ui->plainTextEdit_Output->clear();
+    for(size_t i = 0; i < functionName.Size(); i++)
+    {
+        ui->plainTextEdit_Output->appendPlainText(MyStringToQString(functionName[i]) + ";");
+    }
+    if (functionName.Size() == 0)
+    {
+        ui->plainTextEdit_Output->appendPlainText("There is no functions");
+    }
+}
+
+void MainWindow::on_find_changing_variables_clicked()
+{
+    ui->plainTextEdit_Output->clear();
+    std::regex reg("[\\};]\\s*(([\\*]*\\s*)?\\w+(\\[\\w+\\])?\\s*?(([+|-|^|*|\\/|&|\\|]?=)|\\++|--))");
+    std::smatch res;
+    std::string str = ui->plainTextEdit->toPlainText().toStdString();
+    while(std::regex_search(str, res, reg))
+    {
+        str = res.suffix();
+        ui->plainTextEdit_Output->appendPlainText(QString::number(ui->plainTextEdit->toPlainText().mid(0, (ui->plainTextEdit->toPlainText().size() - str.size())).count('\n') + 1));
+    }
+}
+
+void MainWindow::on_find_local_variables_clicked()
+{
+    MyVector<MyString> name;
+    MyVector<int> count, localOn, localOff, index;
+    int bracket = 0;
+    std::regex reg("((size_t|int|double|float|char)\\s*[\\*]*)\\s*(((\\,\\s)?([\\w]+)\\s*((=\\s-*[\\w+]*|\\([\\w]+\\))?(\\{[\\w ,]+\\})?)){0,});");
+    std::smatch res;
+    std::string str;
+    for(int i = 0; i < ui->plainTextEdit->toPlainText().size(); i++)
+    {
+        if(ui->plainTextEdit->toPlainText()[i] == '{' && ui->plainTextEdit->toPlainText()[i + 1] == '\n')
+        {
+            if(bracket == 0)
+            {
+                localOn.Push_Back(i);
+            }
+            bracket++;
+        }
+        else if(ui->plainTextEdit->toPlainText()[i] == '}' && ui->plainTextEdit->toPlainText()[i + 1] == '\n')
+        {
+            if(bracket == 1)
+            {
+                localOff.Push_Back(i);
+            }
+            bracket--;
+            }
+    }
+    ui->plainTextEdit_Output->clear();
+    ui->plainTextEdit_Output->appendPlainText("Cordinates:");
+    for(size_t i = 0; i < localOn.Size(); i++)
+    {
+        str = ui->plainTextEdit->toPlainText().mid(localOn[i], localOff[i] - localOn[i]).toStdString();
+        while(std::regex_search(str, res, reg))
+        {
+            int exist = -1;
+            for(size_t i = 0; i < name.Size(); i++)
+            {
+                if(name[i] == StdStringToMyString(res[1].str()))
+                {
+                    exist = i;
+                    break;
+                }
+            }
+            if(exist == -1)
+            {
+                count.Push_Back(MyStringToQString(StdStringToMyString(res[3].str())).count(',') + 1);
+                name.Push_Back(StdStringToMyString(res[1].str()));
+            }
+            else
+            {
+                count[exist] += 1;
+            }
+            str = res.suffix();
+            if(exist == -1)
+            {
+                ui->plainTextEdit_Output->appendPlainText(QString::number(ui->plainTextEdit->toPlainText().mid(0, localOff[i]).count('\n') - MyStringToQString(StdStringToMyString(str)).count('\n') + 1));
+            }
+            else
+            {
+                ui->plainTextEdit_Output->appendPlainText(QString::number(ui->plainTextEdit->toPlainText().mid(0, localOff[i]).count('\n') - MyStringToQString(StdStringToMyString(str)).count('\n') + 1));
+            }
+        }
+    }
+    ui->plainTextEdit_Output->appendPlainText("Amount:");
+    for(size_t i = 0; i < name.Size(); i++)
+    {
+        ui->plainTextEdit_Output->appendPlainText(MyStringToQString(name[i]) + " " + QString::number(count[i]));
+    }
+}
+
+void MainWindow::on_find_overload_functions_clicked()
+{
+    ui->plainTextEdit_Output->clear();
+    MyVector<MyString> functionName;
+    MyVector<int> position;
+    std::vector<bool> over;
+    int count = 0;
+    std::regex reg("(((\\w+)\\s+[\\*]*(\\w*::)?\\s*[\\w]+)\\((\\s*[\\w]*\\s*[\\*]*\\s*\\w+\\s*\\,?\\s*){0,}\\))\\s*\\{");
+    std::smatch res;
+    std::string str = ui->plainTextEdit->toPlainText().toStdString();
+    while(std::regex_search(str, res, reg))
+    {
+        functionName.Push_Back(StdStringToMyString(res[2].str()));
+        str = res.suffix();
+        position.Push_Back((ui->plainTextEdit->toPlainText().mid(0, (ui->plainTextEdit->toPlainText().size() - str.size())).count('\n')));
+    }
+    for(size_t i = 0; i < functionName.Size(); i++)
+    {
+        over.push_back(false);
+    }
+    for(size_t i = 0; i < functionName.Size(); i++)
+    {
+        for(size_t j = i + 1; j < functionName.Size(); j++)
+        {
+            if(functionName[i] == functionName[j])
+            {
+                if(!over[i])
+                {
+                    ui->plainTextEdit_Output->appendPlainText(QString::number(position[i]));
+                }
+                if(!over[j])
+                {
+                    ui->plainTextEdit_Output->appendPlainText(QString::number(position[j]));
+                }
+                if(over[i] && over[j])
+                {}
+                else if(over[i] || over[j])
+                {
+                    count += 1;
+                }
+                else
+                {
+                    count += 2;
+                }
+                over[i] = over[j] = true;
+            }
+        }
+    }
+    ui->plainTextEdit_Output->appendPlainText("Amount:");
+    ui->plainTextEdit_Output->appendPlainText(QString::number(count));
+}
+
+void MainWindow::on_find_depth_clicked()
+{
+    ui->plainTextEdit_Output->clear();
+    int bracket = 0;
+    MyVector<MyString> name;
+    MyVector<int> localOnTemp, localOffTemp, deep;
+    std::regex reg("\\s*(if|else|else if)\\s*\\([^\\n.]*\\s*");
+    std::string tm = ui->plainTextEdit->toPlainText().toStdString();
+    for(int i = 0; i < ui->plainTextEdit->toPlainText().size() - 1; i++)
+    {
+        if(ui->plainTextEdit->toPlainText()[i] == '{' && ui->plainTextEdit->toPlainText()[i + 1] == '\n')
+         {
+            localOnTemp.Push_Back(ui->plainTextEdit->toPlainText().mid(0, i).count('\n'));
+            bracket = 1;
+            for(int j = i + 1; j < ui->plainTextEdit->toPlainText().size() - 1; j++)
+            {
+                if(ui->plainTextEdit->toPlainText()[j] == '{' && ui->plainTextEdit->toPlainText()[j + 1] == '\n')
+                {
+                    bracket++;
+                }
+                else if(ui->plainTextEdit->toPlainText()[j] == '}' && ui->plainTextEdit->toPlainText()[j + 1] == '\n')
+                {
+                    bracket--;
+                    if(bracket == 0)
+                    {
+                        localOffTemp.Push_Back(ui->plainTextEdit->toPlainText().mid(0, j).count('\n'));
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    QList tmp = ui->plainTextEdit->toPlainText().split('\n');
+    MyVector<QString> text;
+    for(int i = 0; i < tmp.size(); i++)
+    {
+        text.Push_Back(tmp[i]);
+    }
+    MyVector<int> localOn, localOff;
+    for(size_t i = 0; i < localOnTemp.Size(); i++)
+    {
+        if(std::regex_match(text[localOnTemp[i] - 1].toStdString(), reg))
+        {
+            deep.Push_Back(1);
+            localOn.Push_Back(localOnTemp[i]);
+            localOff.Push_Back(localOffTemp[i]);
+        }
+    }
+    for(size_t i = 0; i < localOn.Size(); i++)
+    {
+        for(int j = localOn[i] + 1; j <= localOff[i]; j++)
+        {
+            for(size_t k = 0; k < localOn.Size(); k++)
+            {
+                if(localOn[k] == j)
+                {
+                    deep[k]++;
+                }
+            }
+        }
+    }
+    for(size_t i = 0; i < localOn.Size(); i++)
+    {
+        ui->plainTextEdit_Output->appendPlainText(QString::number(deep[i]));
+    }
+}
+
+void MainWindow::on_find_logic_errors_clicked()
+{
+    ui->plainTextEdit_Output->clear();
+    std::regex reg("\\s*while\\s*\\(\\s*true\\s*\\)\\s*\\{\\s*\\}");
+    std::smatch res;
+    std::string str = ui->plainTextEdit->toPlainText().toStdString();
+    while(std::regex_search(str, res, reg))
+    {
+        ui->plainTextEdit_Output->appendPlainText("while(true) {}");
+        str = res.suffix();
+    }
+    str = ui->plainTextEdit->toPlainText().toStdString();
+    reg = ("\\s*while\\s*\\(\\s*false\\s*\\)\\s*\\{");
+    while(std::regex_search(str, res, reg))
+    {
+        ui->plainTextEdit_Output->appendPlainText("while(false) {...}");
+        str = res.suffix();
+    }
+    str = ui->plainTextEdit->toPlainText().toStdString();
+    reg = ("\\s*if\\s*\\(\\s*true\\s*\\)\\s*\\{");
+    while(std::regex_search(str, res, reg))
+    {
+        ui->plainTextEdit_Output->appendPlainText("if(true) {...}");
+        str = res.suffix();
+    }
+    str = ui->plainTextEdit->toPlainText().toStdString();
+    reg = ("\\s*if\\s*\\(\\s*false\\s*\\)\\s*\\{");
+    while(std::regex_search(str, res, reg))
+    {
+        ui->plainTextEdit_Output->appendPlainText("if(false) {...}");
+        str = res.suffix();
+    }
+}
+
+void MainWindow::on_open_file_clicked()
+{
+    QString path = QFileDialog::getOpenFileName(this, "Choose file", "C:\\Users\\Notebook\\Desktop\\Study\\c++ Labs 2 sem\\c++ Lab4\\Input(parser).txt");
+    QFile file(path);
+    QTextStream in(&file);
+    file.open(QFile::ReadOnly);
+    ui->plainTextEdit->setPlainText(in.readAll());
+    file.close();
+}
+

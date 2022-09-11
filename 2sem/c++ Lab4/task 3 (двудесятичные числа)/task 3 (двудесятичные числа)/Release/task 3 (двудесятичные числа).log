@@ -1,0 +1,28 @@
+﻿  task 3 (двудесятичные числа).cpp
+C:\Users\Notebook\Desktop\Study\c++ Labs 2 sem\c++ Lab4\task 3 (двудесятичные числа)\task 3 (двудесятичные числа)\task 3 (двудесятичные числа).cpp(71,20): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\Notebook\Desktop\Study\c++ Labs 2 sem\c++ Lab4\MyVectorLib(VS Studio)\MyVectorLib(VS Studio)\MyVector.h(183,24): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\Notebook\Desktop\Study\c++ Labs 2 sem\c++ Lab4\MyVectorLib(VS Studio)\MyVectorLib(VS Studio)\MyVector.h(180): message : во время компиляции функции-члена класс шаблон "void MyVector<char>::Resize(size_t,const T &)"
+          with
+          [
+              T=char
+          ]
+C:\Users\Notebook\Desktop\Study\c++ Labs 2 sem\c++ Lab4\task 3 (двудесятичные числа)\task 3 (двудесятичные числа)\task 3 (двудесятичные числа).cpp(18): message : выполняется компиляция ссылки на экземпляр шаблон функции "void MyVector<char>::Resize(size_t,const T &)"
+          with
+          [
+              T=char
+          ]
+C:\Users\Notebook\Desktop\Study\c++ Labs 2 sem\c++ Lab4\task 3 (двудесятичные числа)\task 3 (двудесятичные числа)\task 3 (двудесятичные числа).cpp(11): message : выполняется компиляция ссылки на экземпляр класс шаблон функции "MyVector<char>"
+C:\Users\Notebook\Desktop\Study\c++ Labs 2 sem\c++ Lab4\MyVectorLib(VS Studio)\MyVectorLib(VS Studio)\MyVector.h(114,21): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\Notebook\Desktop\Study\c++ Labs 2 sem\c++ Lab4\MyVectorLib(VS Studio)\MyVectorLib(VS Studio)\MyVector.h(109): message : во время компиляции функции-члена класс шаблон "MyVector<char> &MyVector<char>::operator =(const MyVector<char> &)"
+C:\Users\Notebook\Desktop\Study\c++ Labs 2 sem\c++ Lab4\task 3 (двудесятичные числа)\task 3 (двудесятичные числа)\task 3 (двудесятичные числа).cpp(48): message : выполняется компиляция ссылки на экземпляр шаблон функции "MyVector<char> &MyVector<char>::operator =(const MyVector<char> &)"
+C:\Users\Notebook\Desktop\Study\c++ Labs 2 sem\c++ Lab4\MyVectorLib(VS Studio)\MyVectorLib(VS Studio)\MyVector.h(89,21): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\Notebook\Desktop\Study\c++ Labs 2 sem\c++ Lab4\MyVectorLib(VS Studio)\MyVectorLib(VS Studio)\MyVector.h(84): message : во время компиляции функции-члена класс шаблон "MyVector<char>::MyVector(const MyVector<char> &)"
+C:\Users\Notebook\Desktop\Study\c++ Labs 2 sem\c++ Lab4\task 3 (двудесятичные числа)\task 3 (двудесятичные числа)\task 3 (двудесятичные числа).cpp(46): message : выполняется компиляция ссылки на экземпляр шаблон функции "MyVector<char>::MyVector(const MyVector<char> &)"
+C:\Users\Notebook\Desktop\Study\c++ Labs 2 sem\c++ Lab4\MyVectorLib(VS Studio)\MyVectorLib(VS Studio)\MyVector.h(172,21): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\Notebook\Desktop\Study\c++ Labs 2 sem\c++ Lab4\MyVectorLib(VS Studio)\MyVectorLib(VS Studio)\MyVector.h(169): message : во время компиляции функции-члена класс шаблон "void MyVector<char>::Reserve(size_t)"
+C:\Users\Notebook\Desktop\Study\c++ Labs 2 sem\c++ Lab4\MyVectorLib(VS Studio)\MyVectorLib(VS Studio)\MyVector.h(198): message : выполняется компиляция ссылки на экземпляр шаблон функции "void MyVector<char>::Reserve(size_t)"
+  Создание кода
+  Previous IPDB not found, fall back to full compilation.
+  All 33 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Создание кода завершено
+  task 3 (двудесятичные числа).vcxproj -> C:\Users\Notebook\Desktop\Study\c++ Labs 2 sem\c++ Lab4\task 3 (двудесятичные числа)\Release\task 3 (двудесятичные числа).exe
