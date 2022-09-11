@@ -1,0 +1,16 @@
+<!DOCTYPE AFC>
+<algorithm version="1.2">
+  <branch>
+    <process text="B = (double) PI / 2"/>
+    <process text="H = (double)(B - A) / 20"/>
+    <assign dest="i" src="0"/>
+    <pre cond="i &lt;= 20">
+      <branch>
+        <process text="x = (double) i * H;"/>
+        <process text="y = sin(x) - cos(x)"/>
+        <ou vars="y"/>
+        <assign dest="i" src="i + 1"/>
+      </branch>
+    </pre>
+  </branch>
+</algorithm>

@@ -1,0 +1,24 @@
+<!DOCTYPE AFC>
+<algorithm version="1.2">
+  <branch>
+    <io vars="x,n"/>
+    <if cond="x &lt; 0.1 || x > 1">
+      <branch>
+        <ou vars="Error"/>
+      </branch>
+      <branch>
+        <assign dest="n1" src="1"/>
+        <pre cond="n1 &lt;= n">
+          <branch>
+            <process text=" f *= n1;"/>
+            <process text="y = (double)(cos(n1 * PI / 4) * pow(x, n1)) / f"/>
+            <process text="sum += y"/>
+            <assign dest="n1" src="n1+ 1"/>
+          </branch>
+        </pre>
+        <ou vars="sum"/>
+        <ou vars="pow(e, x * cos(PI / 4)) * cos(x * sin(PI / 4))"/>
+      </branch>
+    </if>
+  </branch>
+</algorithm>

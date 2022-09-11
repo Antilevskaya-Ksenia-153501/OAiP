@@ -1,0 +1,25 @@
+<!DOCTYPE AFC>
+<algorithm version="1.2">
+  <branch>
+    <pre cond="i &lt;= 30 ">
+      <branch>
+        <if cond="i % 2 == 1">
+          <branch>
+            <process text=" N = (double) pow(i -i*i, 2)"/>
+          </branch>
+          <branch>
+            <if cond="i % 2 == 0">
+              <branch>
+                <process text="N = (double) pow((i / 2 - i * i * i), 2)"/>
+              </branch>
+              <branch/>
+            </if>
+          </branch>
+        </if>
+        <process text=" sum += N"/>
+        <process text="  i++"/>
+      </branch>
+    </pre>
+    <ou vars="sum "/>
+  </branch>
+</algorithm>

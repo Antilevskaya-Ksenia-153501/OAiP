@@ -1,0 +1,23 @@
+<!DOCTYPE AFC>
+<algorithm version="1.2">
+  <branch>
+    <io vars="p"/>
+    <process text="min = abs(asin(x) - x + pow(x, 2) - 1)"/>
+    <process text="step = (1. - x) / p"/>
+    <assign src="0" dest="i"/>
+    <pre cond="i &lt;= p">
+      <branch>
+        <process text="x += step"/>
+        <process text=" f_x = abs(asin(x) - x + pow(x, 2) - 1)"/>
+        <if cond="f_x &lt; min">
+          <branch>
+            <process text=" min = f_x              root = x"/>
+          </branch>
+          <branch/>
+        </if>
+        <assign src="i + 1" dest="i"/>
+      </branch>
+    </pre>
+    <ou vars="min,root"/>
+  </branch>
+</algorithm>
